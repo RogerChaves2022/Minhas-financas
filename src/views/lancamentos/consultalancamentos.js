@@ -12,6 +12,7 @@ import LocalStorageService from "../../app/service/localstorageservice";
 import * as messages from '../../components/toastr'
 
 import { Dialog } from 'primereact/dialog';
+import { Button } from 'primereact/button';
 
 class ConsultaLancamentos extends React.Component{
 
@@ -20,6 +21,8 @@ class ConsultaLancamentos extends React.Component{
         mes: '',
         tipo: '',
         descricao: '',
+        showConfirmDialog: false,
+        lancamentoDeletar: {},
         lancamentos: []
     }
 
@@ -40,7 +43,7 @@ class ConsultaLancamentos extends React.Component{
             mes: this.state.mes,
             tipo: this.state.tipo,
             descricao: this.state.descricao,
-            usuario: usuarioLogado.id
+            usuario: usuarioLogado.id           
         }
 
         this.service
@@ -56,12 +59,22 @@ class ConsultaLancamentos extends React.Component{
         console.log(id)
     } 
 
-    deletar = (lancamento) => {
-        this.service.deletar(lancamento.id).then(response => {
+    abrirConfirmacao = (lancamento) => {
+        this.setState({showConfirmDialog: true, lancamentoDeletar: lancamento})
+    }
+
+    cancelarDelecao = () => {
+        
+        this.setState({showConfirmDialog: false, lancamentoDeletar: {}})
+
+    }
+
+    deletar = () => {
+        this.service.deletar(this.state.lancamentoDeletar.id).then(response => {
             const lancamentos = this.state.lancamentos
-            const index = lancamentos.indexOf(lancamento)
+            const index = lancamentos.indexOf(this.state.lancamentoDeletar)
             lancamentos.splice(index, 1)
-            this.setState(lancamentos)
+            this.setState({lancamentos: lancamentos, showConfirmDialog: false})
             messages.mensagemSucesso("Lançamento deletado com sucesso!")
         }).catch(error => {
             messages.mensagemErro("Ocorreu um erro ao tentar deletar!")
@@ -71,6 +84,13 @@ class ConsultaLancamentos extends React.Component{
     render(){
         const meses = this.service.obterListaMeses()
         const tipos = this.service.obterListaTipos();
+
+        const confirmDialogFooter = (
+            <div>
+                <Button label="Confirma" icon="pi pi-check" onClick={this.deletar} />
+                <Button label="Cancela" icon="pi pi-times" onClick={this.cancelarDelecao} className="p-button-secondary" />
+            </div>
+        );
 
         return(
             <Card title="Consulta Lançamentos">
@@ -121,18 +141,20 @@ class ConsultaLancamentos extends React.Component{
                     <div className="col-md-12">
                         <div className="bs-component">
                             <LancamentosTable lancamentos={this.state.lancamentos}
-                                                deletar={this.deletar}
+                                                deletar={this.abrirConfirmacao}
                                                 editarAction={this.editarAction}/>
                         </div>
                     </div>
                 </div>
                 <br/>
                 <div>
-                <Dialog header="Header" visible={displayBasic} style={{ width: '50vw' }} footer={renderFooter('displayBasic')} onHide={() => onHide('displayBasic')}>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <Dialog header="Header" 
+                visible={this.state.showConfirmDialog} 
+                style={{ width: '50vw' }}
+                footer={confirmDialogFooter}
+                modal={true} 
+                onHide={() => this.setState({showConfirmDialog: false})}>
+                <p>Confirma a exclusão deste lançamento</p>
 </Dialog>
                 </div>
             </Card>
