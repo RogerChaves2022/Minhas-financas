@@ -1,7 +1,8 @@
 import React from "react";
 
 import UsuarioService from "../app/service/usuarioservice";
-import LocalStorageService from "../app/service/localstorageservice";
+import { AuthContext } from "../main/authProvider";
+
 
 class Home extends React.Component{
 
@@ -16,7 +17,7 @@ class Home extends React.Component{
 
     componentDidMount(){
 
-        const usuarioLogado = LocalStorageService.obterItem('_usuario_logado')
+        const usuarioLogado = this.context.usuarioAutenticado;
 
         this.usuarioService.obterSaldoPorUsuario(usuarioLogado.id)
         .then( response => {
@@ -39,13 +40,16 @@ render(){
       <a className="btn btn-primary btn-lg" 
          href="#/cadastro-usuarios" 
          role="button">
-        <i className="fa fa-users">
-            </i>  Cadastrar Usuário</a>
-      <a className="btn btn-danger btn-lg" href="https://bootswatch.com/flatly/#" role="button"><i className="fa fa-users"></i>  Cadastrar Lançamento</a>
+        <i className="pi pi-user-edit"></i>  Cadastrar Usuário</a>
+      <a className="btn btn-danger btn-lg"
+      onClick={e => this.props.history.push('/cadastro-lancamentos')} 
+      role="button"><i className="pi pi-money-bill"></i>  Cadastrar Lançamento</a>
     </p>
   </div>
     )
 }
 }
+
+Home.contextType = AuthContext;
 
 export default Home
