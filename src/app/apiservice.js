@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const httpClient = axios.create({
-    baseURL: 'http://projetosjdbc-production.up.railway.app:7643'
+    baseURL: 'http://projetosjdbc-production.up.railway.app'
 })
 
     class ApiService{
