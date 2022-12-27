@@ -29,6 +29,8 @@ class Login extends React.Component{
             this.props.history.push('/home')
         }).catch( erro => { 
             mensagemErro(erro.response.data)
+            console.log(erro)
+            console.log(URL)
         })
     }
 
