@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-const baseURL = process.env.production.REACT_APP_API_URL
+
 export const httpClient = axios.create({
-    baseURL: baseURL, withCredentials: true
+    baseURL: "http://projetosjdbc-production.up.railway.app", withCredentials: true
 })
 
     class ApiService{
