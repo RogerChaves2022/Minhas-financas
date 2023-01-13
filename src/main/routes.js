@@ -35,7 +35,6 @@ function Rotas(props){
                     <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} path="/home" component={Home} />
                     <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} path="/consulta-lancamentos" component={Consultalancamentos}/>
                     <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} path="/cadastro-lancamentos/:id?" component={CadastroLancamentos} />
-                    <Redirect to="/login" />
                 </Switch>
                 </HashRouter>
             )

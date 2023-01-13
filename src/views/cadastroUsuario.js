@@ -42,7 +42,8 @@ class CadastroUsuario extends React.Component{
             this.props.history.push('/login')
         }).catch(error => {
             mensagemErro(error.response.data)
-            console.log(error.response.data)
+            console.log(error)
+            console.log(URL)
         })
     }
 
