@@ -1,7 +1,4 @@
 import axios from 'axios'
-const cors = require('cors');
-
-httpClient.use(cors());
 
 export const httpClient = axios.create({
     baseURL: "http://projetosjdbc-production.up.railway.app:5974", withCredentials: true
