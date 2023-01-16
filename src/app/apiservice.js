@@ -1,10 +1,7 @@
 import axios from 'axios'
 
 export const httpClient = axios.create({
-    baseURL: "http://192.168.0.174:8080", withCredentials: true, headers: {                  
-        "Access-Control-Allow-Origin": "*", 
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"                 
-    }
+    baseURL: "http://192.168.0.174:8080", withCredentials: false
 })
 
     class ApiService{
