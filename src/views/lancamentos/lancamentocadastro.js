@@ -19,7 +19,8 @@ class CadastroLancamentos extends React.Component {
         tipo: "",
         status: "",
         usuario: null,
-        atualizando: false
+        atualizando: false,
+        parcela: ""
     }
 
     constructor(){
@@ -45,8 +46,8 @@ class CadastroLancamentos extends React.Component {
 
     submit = () => {
         const usuarioLogado = LocalStorageService.obterItem('_usuario_logado');
-        const { descricao, ano, mes, valor, tipo } = this.state;
-        const lancamento = { descricao, ano, mes, valor, tipo, usuario: usuarioLogado.id};
+        const { descricao, ano, mes, valor, tipo , parcela} = this.state;
+        const lancamento = { descricao, ano, mes, valor, tipo, parcela, usuario: usuarioLogado.id};
         
         try {
             this.service.validar(lancamento)
@@ -68,9 +69,9 @@ class CadastroLancamentos extends React.Component {
 
     atualizar = () => {
         
-        const { descricao, ano, mes, valor, tipo, status, usuario, id } = this.state;
+        const { descricao, ano, mes, valor, tipo, status, usuario, parcela, id } = this.state;
 
-        const lancamento = { descricao, ano, mes, valor, tipo, id, usuario, status};
+        const lancamento = { descricao, ano, mes, valor, tipo, id, usuario, parcela, status};
         try {
             this.service
             .atualizar(lancamento)
@@ -113,7 +114,7 @@ class CadastroLancamentos extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                     <FormGroup id="inputAno" label="Ano: *">
                     <input id="inputAno"
                         name="ano"
@@ -123,13 +124,23 @@ class CadastroLancamentos extends React.Component {
                         className="form-control"></input>
                     </FormGroup>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                     <FormGroup id="inputMes" label="Mês: *">
                     <SelectMenu id="inputMes" 
                                 name="mes"
                                 value={this.state.mes}
                                 onChange={this.handleChange}
                                 lista={meses} 
+                                className="form-control" />
+                    </FormGroup>
+                    </div>
+                    <div className="col-md-4">
+                    <FormGroup id="inputParcela" label="Parcelas: *">
+                    <input id="inputParcela" 
+                                name="parcela"
+                                value={this.state.parcela}
+                                onChange={this.handleChange}
+                                type="text"
                                 className="form-control" />
                     </FormGroup>
                     </div>

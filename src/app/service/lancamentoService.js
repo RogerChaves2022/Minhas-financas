@@ -64,6 +64,10 @@ export default class LancamentoService extends ApiService{
             erros.push("Informe a Descrição.")
         }
 
+        if(!lancamento.parcela && lancamento.parcela !== Number){
+            erros.push("Informe a quantidade de Parcelas.")
+        }
+
         if(erros && erros.length > 0){
             throw new ErroValidacao(erros);
         }

@@ -7,7 +7,8 @@ import { AuthContext } from "../main/authProvider";
 class Home extends React.Component{
 
     state = { 
-        saldo: 0
+        saldo: 0 ,
+        nome: ""
     }
 
     constructor(){
@@ -15,9 +16,14 @@ class Home extends React.Component{
         this.usuarioService = new UsuarioService();
     }
 
+    
+
     componentDidMount(){
 
         const usuarioLogado = this.context.usuarioAutenticado;
+        
+        this.setState({nome: usuarioLogado.nome})
+        //this.state({nome: this.context.usuarioLogado.nome})
 
         this.usuarioService.obterSaldoPorUsuario(usuarioLogado.id)
         .then( response => {
@@ -31,7 +37,7 @@ class Home extends React.Component{
 render(){
     return(
         <div className="jumbotron">
-    <h1 className="display-3">Bem vindo!</h1>
+    <h1 className="display-3">Bem vindo, { this.state.nome }!</h1>
     <p className="lead">Esse é seu sistema de finanças.</p>
     <p className="lead">Seu saldo para o mês atual é de R$ {this.state.saldo}</p>
     <hr className="my-4" />

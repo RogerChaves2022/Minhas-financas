@@ -14,8 +14,12 @@ class UsuarioService extends ApiService{
         return this.get(`/${id}/saldo`)
     }
 
+    obterHistorico(id, ano){
+        return this.get(`/${id}/historico/${ano}`)
+    }
+
     salvar(usuario){
-        return this.post('/', usuario)
+        return this.post('', usuario)
     }
 
     validar(usuario) {
