@@ -1,11 +1,7 @@
 import axios from 'axios'
 
 export const httpClient = axios.create({
-    baseURL: "http://192.168.0.174:8080", withCredentials: true, headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json',
-        'User-Agent': "PostmanRuntime/7.30.0"
-      }
+    baseURL: "http://192.168.0.174:8080", withCredentials: true
 })
 
     class ApiService{
